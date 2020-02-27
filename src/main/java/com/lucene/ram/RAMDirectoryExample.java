@@ -81,6 +81,8 @@ public class RAMDirectoryExample {
 				System.out.println("Document Number : " + sd.doc +" :: Document Name : " + d.get("name") + "  :: Content : " + d.get("content")
 						+ "  :: Score : " + sd.score);
 			}
+			System.out.println("");
+			
 			// don't forget to close the reader
 			reader.close();
 		} catch (IOException e) {
@@ -107,23 +109,37 @@ public class RAMDirectoryExample {
 			{
 			     Document d = reader.document(i);
 			     
-			     //Method 1
-			     System.out.println(""+d.getFields().iterator().next().stringValue());
+			     /**
+			      * There are three types of method to retrieve indexed document name list
+			      */
 			     
-			     //Method 2
-			     System.out.println(""+d.iterator().next().stringValue());
+			     /**
+			      * Method 1 for get document name list
+			      */			      
+			     //System.out.println(""+d.getFields().iterator().next().stringValue());
+			     
+			     /**
+			      * Method 2 for get document name list
+			      */			      
+			     //System.out.println(""+d.iterator().next().stringValue());
+			     
+			     /**
+			      * Method 3 for get document name list
+			      */			      
+			     String[] vls = d.getValues("name");			     
+			     for(int j=0; j < vls.length; j++) {
+			    	 System.out.println(""+vls[j].toString());
+			     }
+			     //System.out.println("");
 			     
 			     //Method 1 for get term list
-			     //System.out.println(""+d.getField("content").stringValue());
+			     //System.out.println(""+d.getField("content").stringValue());			     
 			     
-			     String[] vl = searcher.doc(i).getValues("content");
-			     
-			     for(int k=0; k < vl.length; k++) {
-			    	 System.out.println(""+vl[k].toString());
-			     }
-			     
-			     
-			     //System.out.println(""+d.getFields("content").toString());
+			     //Method 2 for get term list
+			     //String[] vl = searcher.doc(i).getValues("content");			     
+			     //for(int k=0; k < vl.length; k++) {
+			     //	 System.out.println(""+vl[k].toString());
+			     //}			    
 			}
 			
 			// don't forget to close the reader
