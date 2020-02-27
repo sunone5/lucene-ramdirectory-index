@@ -20,6 +20,17 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.RAMDirectory;
 
+/**
+ * 
+ * @author W.P.Roshan
+ * @email  sunone5 at gmail.com
+ * 
+ * The RAMDirector is deprecated instead you can use 
+ * 
+ * import org.apache.lucene.index.memory.MemoryIndex;
+ *
+ */
+
 public class RAMDirectoryExample {
 
 	public RAMDirectoryExample() {
@@ -78,11 +89,11 @@ public class RAMDirectoryExample {
 			// Let's print found doc names and their content along with score
 			for (ScoreDoc sd : foundDocs.scoreDocs) {
 				Document d = searcher.doc(sd.doc);
-				System.out.println("Document Number : " + sd.doc +" :: Document Name : " + d.get("name") + "  :: Content : " + d.get("content")
-						+ "  :: Score : " + sd.score);
+				System.out.println("Document Number : " + sd.doc + " :: Document Name : " + d.get("name")
+						+ "  :: Content : " + d.get("content") + "  :: Score : " + sd.score);
 			}
 			System.out.println("");
-			
+
 			// don't forget to close the reader
 			reader.close();
 		} catch (IOException e) {
@@ -93,7 +104,7 @@ public class RAMDirectoryExample {
 			e.printStackTrace();
 		}
 	}
-	
+
 	static void readIndex_Get_Documents(RAMDirectory ramDir) {
 		IndexReader reader = null;
 		try {
@@ -102,37 +113,35 @@ public class RAMDirectoryExample {
 
 			// Create index searcher
 			IndexSearcher searcher = new IndexSearcher(reader);
-			
-			
+
 			System.out.println("-----------------------Document List-----------------------");
 			int maxDoc = reader.maxDoc();
-			for (int i=0; i <maxDoc ; i++)
-			{
-			     Document d = reader.document(i);
-			     
-			     /**
-			      * There are three types of method to retrieve indexed document name list
-			      */
-			     
-			     /**
-			      * Method 1 for get document name list
-			      */			      
-			     //System.out.println(""+d.getFields().iterator().next().stringValue());
-			     
-			     /**
-			      * Method 2 for get document name list
-			      */			      
-			     //System.out.println(""+d.iterator().next().stringValue());
-			     
-			     /**
-			      * Method 3 for get document name list
-			      */			      
-			     String[] vls = d.getValues("name");			     
-			     for(int j=0; j < vls.length; j++) {
-			    	 System.out.println(""+vls[j].toString());
-			     }				     			    
+			for (int i = 0; i < maxDoc; i++) {
+				Document d = reader.document(i);
+
+				/**
+				 * There are three types of method to retrieve indexed document name list
+				 */
+
+				/**
+				 * Method 1 for get document name list
+				 */
+				// System.out.println(""+d.getFields().iterator().next().stringValue());
+
+				/**
+				 * Method 2 for get document name list
+				 */
+				// System.out.println(""+d.iterator().next().stringValue());
+
+				/**
+				 * Method 3 for get document name list
+				 */
+				String[] vls = d.getValues("name");
+				for (int j = 0; j < vls.length; j++) {
+					System.out.println("" + vls[j].toString());
+				}
 			}
-			
+
 			// don't forget to close the reader
 			reader.close();
 		} catch (IOException e) {
@@ -140,8 +149,7 @@ public class RAMDirectoryExample {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	static void readIndex_Get_Terms(RAMDirectory ramDir) {
 		IndexReader reader = null;
 		try {
@@ -154,34 +162,31 @@ public class RAMDirectoryExample {
 			System.out.println("");
 			System.out.println("--------------------------Term List------------------------");
 			int maxDoc = reader.maxDoc();
-			for (int i=0; i <maxDoc ; i++)
-			{
-			     Document d = reader.document(i);
-			     
-			     /**
-			      * There are three types of methods to retrieve indexed term list
-			      */	     
-			     
-			     /**
-			      * Method 1 for retrieve terms list
-			      */
-			     //System.out.println(""+d.get("content").toString());
-			     
-			     
-			     /**
-			      * Method 2 for retrieve terms list
-			      */
-			     //System.out.println(""+d.getField("content").stringValue());			     
-			     
-			     
-			     /**
-			      * Method 3 for retrieve terms list
-			      */
-			     String[] vl = searcher.doc(i).getValues("content");			     
-			     for(int k=0; k < vl.length; k++) {
-			     	 System.out.println(""+vl[k].toString());
-			     }				     
-			}			
+			for (int i = 0; i < maxDoc; i++) {
+				Document d = reader.document(i);
+
+				/**
+				 * There are three types of methods to retrieve indexed term list
+				 */
+
+				/**
+				 * Method 1 for retrieve terms list
+				 */
+				// System.out.println(""+d.get("content").toString());
+
+				/**
+				 * Method 2 for retrieve terms list
+				 */
+				// System.out.println(""+d.getField("content").stringValue());
+
+				/**
+				 * Method 3 for retrieve terms list
+				 */
+				String[] vl = searcher.doc(i).getValues("content");
+				for (int k = 0; k < vl.length; k++) {
+					System.out.println("" + vl[k].toString());
+				}
+			}
 			// don't forget to close the reader
 			reader.close();
 		} catch (IOException e) {
@@ -202,11 +207,11 @@ public class RAMDirectoryExample {
 
 		// Search indexed docs in RAMDirectory
 		searchIndex(ramDir, analyzer);
-		
-		//read Index get indexed document list
+
+		// read Index get indexed document list
 		readIndex_Get_Documents(ramDir);
-		
-		//read Index get indexed terms list
+
+		// read Index get indexed terms list
 		readIndex_Get_Terms(ramDir);
 	}
 
